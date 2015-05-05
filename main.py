@@ -4,6 +4,7 @@ import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import urlfetch
+from webapp2_extras import json
 
 from google.appengine.api import taskqueue
 from models import MFInfo
@@ -34,8 +35,16 @@ class NavHandler(webapp.RequestHandler):
         if len(result) == 0:
             self.response.out.write('error')
             return
-
-        self.response.out.write(result[0].nav)
+        self.response.content_type = 'application/json'
+        obj = {
+            'scheme_name': result[0].scheme_name, 
+            'date': result[0].date,
+            'nav':  result[0].nav,
+            'repurchase price' :result[0].repurchase_price,
+            'sale price' :result[0].sale_price
+          } 
+        self.response.write(json.encode(obj))
+        
 
 def chunker(seq, size):
     """ Utility method to split a list into chunks.
@@ -97,8 +106,8 @@ class UpdateNAV(webapp.RequestHandler):
       - Put each chunk on the default task queue
     """
     def get(self):
-
-        url = 'http://www.amfiindia.com/spages/NAV0.txt'
+        
+        url = 'http://www.portal.amfiindia.com/spages/NAV0.txt' # corrected dump link
         result = urlfetch.fetch(url, deadline=120)
 
         if result.status_code != 200:
