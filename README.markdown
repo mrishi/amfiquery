@@ -33,5 +33,5 @@ You can find the source code on github, at
 — Ankit Solanki • <http://ankitsolanki.com/> • <http://simulacra.in>
 ----------------------------------------------------------------------
 
-Changes by — Srinivas Gowa • <http://solancer.com/> • <http://solancer.com>
+Changes by — Srinivas Gowda • <http://solancer.com/> • <http://solancer.com>
 
